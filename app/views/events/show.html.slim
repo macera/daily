@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @event.title
+p
+  strong Start at:
+  = @event.start_at
+p
+  strong End at:
+  = @event.end_at
+p
+  strong Category:
+  = @event.category
+p
+  strong Body:
+  = @event.body
+p
+  strong User:
+  = @event.user
+
+= link_to 'Edit', edit_event_path(@event)
+'|
+= link_to 'Back', events_path
