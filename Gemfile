@@ -50,6 +50,8 @@ group :development do
 end
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+
   gem 'pry-rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
