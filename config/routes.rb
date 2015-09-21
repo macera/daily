@@ -1,12 +1,29 @@
 Rails.application.routes.draw do
+
+  root 'reports#index'
+
+  concern :commentable do
+    resources :comments, only: [:destroy]
+  end
+
+  resources :reports, concerns: :commentable do
+    member do
+      post :comments
+      post :good
+    end
+    collection do
+      get :analysis
+    end
+  end
+
   resources :events
   resources :articles
-  resources :reports
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+
+  # concern :commentable do
+  #   post 'toggle'
+  # end
+  # resources :posts, concerns: :commentable
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
