@@ -20,7 +20,11 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
-    @report = Report.new
+    @report = current_user.reports.new
+    2.times do
+      @report.timereports.build
+    end
+    @report.public = false
   end
 
   # GET /reports/1/edit
@@ -47,7 +51,7 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1.json
   def update
     respond_to do |format|
-      if @report.update(report_params)
+      if @report.update(report_update_params)
         format.html { redirect_to @report, notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
@@ -68,7 +72,7 @@ class ReportsController < ApplicationController
   end
 
   def comments
-    parameters = comment_params.merge(user_id: 1)#current_user.id
+    parameters = comment_params.merge(user_id: current_user.id)
     @comment = @report.comments.new(parameters)
 
     respond_to do |format|
@@ -94,7 +98,11 @@ class ReportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def report_params
-      params.require(:report).permit(:daily_date, :body, :public, :confidentiality, :rank, :user_id)
+      params.require(:report).permit(:daily_date, :body, :public, :confidentiality, :rank, :user_id, timereports_attributes: [ :report_id, :time_from, :time_to, :occupation, :remark, :_destroy])
+    end
+
+    def report_update_params
+      params.require(:report).permit(:daily_date, :body, :public, :confidentiality, :rank, :user_id, timereports_attributes: [ :id, :report_id, :time_from, :time_to, :occupation, :remark, :_destroy])
     end
 
     def comment_params

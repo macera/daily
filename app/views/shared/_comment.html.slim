@@ -10,9 +10,10 @@ ul
           h3 class="popover-title"
             = t(comment.created_at)
             = comment.user_name
-            = link_to report_comment_path(target, comment), class: 'btn', method: :delete, data: { confirm: '削除しますか？' }
-              i class="icon-white icon-trash"
-              | 削除
+            - if comment.user_id == current_user.id
+              = link_to report_comment_path(target, comment), class: 'btn', method: :delete, data: { confirm: '削除しますか？' }
+                i class="icon-white icon-trash"
+                | 削除
           .popover-content
             = comment.content
 

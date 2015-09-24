@@ -1,0 +1,17 @@
+tr class="fields"
+  - times = {}
+  = f.hidden_field :id
+  td class="span4"
+    - times = setting_default_time(f.index)
+    = f.time_select :time_from, {:time_separator => ':' ,:default => Time.now.change(hour: times[:h_start], min: 0), :minute_step => 5 }, {:class => "input-mini"}
+    | ~
+    = f.time_select :time_to, { time_separator: ':', default: Time.now.change(hour: times[:h_end], min: 0), minute_step: 5}, { class: "input-mini" }
+  td class="span3"
+    = f.select :occupation, occupation_table, { include_blank: true }, { class: "span12" }
+  td class="span3"
+    = f.text_area :remark, {:class => 'span12 ja_em'}
+  td class="span1"
+    - case f.index
+    - when 0
+    - else
+      = link_to_remove_fields "削除<i class='icon-white icon-trash'></i>", f
