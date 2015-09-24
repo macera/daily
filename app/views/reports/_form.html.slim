@@ -8,20 +8,39 @@
 
   .field
     = f.label :daily_date
-    = f.date_select :daily_date
+    = f.date_field :daily_date
+  .field
+    table class="table table-bordered table-condensed header_style"
+      thead
+        tr
+          th class="span4" 時刻
+          th class="span3" 業務内容
+          th class="span3" 備考
+          th class="span1" 削除
+      tbody id="timereports"
+        = f.fields_for :timereports do |lf|
+          = render partial: 'timereport_fields', locals: { f: lf}
+        p
+        = link_to_add_fields "<i class='icon-white icon-arrow-right'>行追加</i>", f, :timereports, "#timereports"
   .field
     = f.label :body
     = f.text_area :body
   .field
-    = f.label :public
-    = f.check_box :public
-  .field
     = f.label :confidentiality
     = f.text_area :confidentiality
   .field
-    = f.label :rank
-    = f.text_field :rank
-  .field
-    = f.label :user
-    = f.text_field :user
+    = f.label :public
+    = f.check_box :public
   .actions = f.submit
+
+javascript:
+  function remove_fields(link) {
+    $(link).prev("input[type=hidden]").val("1");
+    $(link).closest(".fields").hide();
+  }
+
+  function add_fields(link, association, content, target) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(target).append(content.replace(regexp, new_id));
+  }

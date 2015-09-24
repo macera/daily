@@ -1,23 +1,41 @@
-p#notice = notice
-
 p
   strong Daily date:
   = @report.daily_date
+
+table class="table table-bordered table-condensed header_style"
+  tr
+    th
+      label 時刻
+    th
+      label 業務内容
+    th
+      label 進捗状況
+    th
+      label 備考
+  - @report.timereports.each do | timereport |
+    tr
+      td
+        = timereport.time_from.strftime("%H:%M")
+        | 〜
+        = timereport.time_to.strftime("%H:%M")
+      td
+        = table_show(timereport.occupation, occupation_table)
+      td
+        = timereport.remark
+
 p
   strong Body:
   = @report.body
 p
-  strong Public:
-  = @report.public
-p
   strong Confidentiality:
   = @report.confidentiality
 p
-  strong Rank:
-  = @report.rank
-p
-  strong User:
-  = @report.user
+  strong Public:
+  = @report.public
+
+
+= render partial: '/shared/comment', locals: { target: @report, url: comments_report_path(report_id: @report.id) }
+
 
 = link_to 'Edit', edit_report_path(@report)
 '|
