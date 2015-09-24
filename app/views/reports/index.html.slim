@@ -4,9 +4,7 @@ table
   thead
     tr
       th Daily date
-      th Body
       th Public
-      th Confidentiality
       th Rank
       th User
       th
@@ -17,12 +15,11 @@ table
     - @reports.each do |report|
       tr
         td = report.daily_date
-        td = report.body
         td = report.public
-        td = report.confidentiality
         td = report.rank
         td = report.user
         td = link_to 'Show', report
+        td = link_to 'Copy', copy_new_report_path(report)
         td = link_to 'Edit', edit_report_path(report)
         td = link_to 'Destroy', report, data: {:confirm => 'Are you sure?'}, :method => :delete
 

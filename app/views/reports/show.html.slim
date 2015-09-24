@@ -27,17 +27,12 @@ p
   strong Body:
   = @report.body
 p
-  strong Public:
-  = @report.public
-p
   strong Confidentiality:
   = @report.confidentiality
 p
-  strong Rank:
-  = @report.rank
-p
-  strong User:
-  = @report.user
+  strong Public:
+  = @report.public
+
 
 = render partial: '/shared/comment', locals: { target: @report, url: comments_report_path(report_id: @report.id) }
 

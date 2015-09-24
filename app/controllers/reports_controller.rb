@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_report, only: [:show, :edit, :update, :destroy, :comments, :good]
+  before_action :set_report, only: [:show, :edit, :update, :copy_new, :destroy, :comments, :good]
 
   # GET /reports
   # GET /reports.json
@@ -24,6 +24,11 @@ class ReportsController < ApplicationController
     2.times do
       @report.timereports.build
     end
+    @report.public = false
+  end
+
+  def copy_new
+    @report = @report.copy
     @report.public = false
   end
 

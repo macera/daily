@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :reports, concerns: :commentable do
     member do
+      get :copy_new
       post :comments
       post :good
     end
